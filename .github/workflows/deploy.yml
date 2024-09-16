@@ -4,11 +4,11 @@ on:
   push:
     branches: [ main ]
     paths-ignore:
-        - '**.md'
+      - '**.md'
   pull_request:
     branches: [ main ]
     paths-ignore:
-        - '**.md'
+      - '**.md'
 
 jobs:
   build-and-push:
@@ -25,24 +25,27 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-    - name: Check PWS remote, pull, merge, and push
+    - name: Push to PWS
       env:
         PWS_URL: ${{ secrets.PWS_URL }}
       run: |
-          # Check if main branch exists locally
-          if ! git show-ref --verify --quiet refs/heads/main; then
-            echo "Creating main branch"
-            git branch main
-          fi
-          
-          # Switch to main branch
-          git checkout main
+        # Check if main branch exists locally
+        if ! git show-ref --verify --quiet refs/heads/main; then
+          echo "Creating main branch"
+          git branch main
+        fi
 
-          # Push to main branch and capture the output
-          push_output=$(git push $PWS_URL main:main 2>&1)
-          if [[ $? -ne 0 ]]; then
-            echo "Push failed with output: $push_output"
-            echo "Error: Unable to push changes. Please check the error message above and resolve any conflicts manually."
-            exit 1
-          fi
-          echo "Push successful with output: $push_output"
+        # Switch to main branch
+        git checkout main
+
+        # Ensure that the local branch is up-to-date
+        git pull origin main
+
+        # Push to PWS and capture the output
+        push_output=$(git push $PWS_URL main:main 2>&1)
+        if [[ $? -ne 0 ]]; then
+          echo "Push failed with output: $push_output"
+          echo "Error: Unable to push changes. Please check the error message above and resolve any conflicts manually."
+          exit 1
+        fi
+        echo "Push successful with output: $push_output"
