@@ -25,6 +25,17 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+    - name: Debug Git Information
+      run: |
+        echo "Git status:"
+        git status
+        echo "Git remote -v:"
+        git remote -v
+        echo "Git branch:"
+        git branch -a
+        echo "Git log:"
+        git log --oneline --decorate --graph --all
+
     - name: Push to PWS
       env:
         PWS_URL: ${{ secrets.PWS_URL }}
@@ -42,7 +53,9 @@ jobs:
         git pull origin main
 
         # Push to PWS and capture the output
+        echo "Pushing to PWS..."
         push_output=$(git push $PWS_URL main:main 2>&1)
+        echo "$push_output"
         if [[ $? -ne 0 ]]; then
           echo "Push failed with output: $push_output"
           echo "Error: Unable to push changes. Please check the error message above and resolve any conflicts manually."
