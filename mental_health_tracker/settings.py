@@ -30,8 +30,8 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1","derensh-pandian-mentalhealthtracker.p
 CSRF_TRUSTED_ORIGINS = [
   "http://localhost",
   "http://127.0.0.1",
-  "http://pbp.cs.ui.ac.id",
-  "https://pbp.cs.ui.ac.id"
+  "http://derensh.pandain:AYrS1OzsWYontZLQO03R-DHvY_3akeFa@pbp.cs.ui.ac.id/derensh.pandian/mentalhealthtracker",
+  "https://derensh.pandain:AYrS1OzsWYontZLQO03R-DHvY_3akeFa@pbp.cs.ui.ac.id/derensh.pandian/mentalhealthtracker"
 ]
 
 # Application definition
