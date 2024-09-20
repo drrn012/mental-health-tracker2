@@ -14,14 +14,18 @@ from django.contrib import messages
 def show_main(request):
     mood_entries = MoodEntry.objects.filter(user=request.user)
     context = {
-        'npm' : '2306123456',
+        'npm': '2306123456',
         'name': request.user.username,
         'class': 'PBP KKI',
-        'mood_entries' : mood_entries,
-        'last_login': request.COOKIES['last_login'],
+        'mood_entries': mood_entries,
+        'last_login': request.COOKIES.get('last_login', 'Not set'),  # Default value if cookie doesn't exist
     }
 
     return render(request, "main.html", context)
+
+
+    return render(request, "main.html", context)
+
 
 def create_mood_entry(request):
     form = MoodEntryForm(request.POST or None)
