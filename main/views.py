@@ -14,7 +14,7 @@ from django.contrib import messages
 def show_main(request):
     mood_entries = MoodEntry.objects.filter(user=request.user)
     context = {
-        'npm': '2306123456',
+        'npm': '2306256311',
         'name': request.user.username,
         'class': 'PBP KKI',
         'mood_entries': mood_entries,
@@ -24,7 +24,6 @@ def show_main(request):
     return render(request, "main.html", context)
 
 
-    return render(request, "main.html", context)
 
 
 def create_mood_entry(request):
