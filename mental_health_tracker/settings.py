@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -27,17 +26,20 @@ SECRET_KEY = 'django-insecure-rnt-fap^ypp9ljzggzj(!w51z=mfi4!krcl_fmrkif%l=s3ufu
 PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = not PRODUCTION
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1","derensh-pandian-mentalhealthtracker.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "derensh-pandian-mentalhealthtracker.pbp.cs.ui.ac.id",
+]
 
 CSRF_TRUSTED_ORIGINS = [
-  "http://localhost",
-  "http://127.0.0.1",
-  "http://derensh.pandain:AYrS1OzsWYontZLQO03R-DHvY_3akeFa@pbp.cs.ui.ac.id/derensh.pandian/mentalhealthtracker",
-  "https://derensh.pandain:AYrS1OzsWYontZLQO03R-DHvY_3akeFa@pbp.cs.ui.ac.id/derensh.pandian/mentalhealthtracker"
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://derensh.pandain:AYrS1OzsWYontZLQO03R-DHvY_3akeFa@pbp.cs.ui.ac.id/derensh.pandian/mentalhealthtracker",
+    "https://derensh.pandain:AYrS1OzsWYontZLQO03R-DHvY_3akeFa@pbp.cs.ui.ac.id/derensh.pandian/mentalhealthtracker",
 ]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this line for static file management
 ]
 
 ROOT_URLCONF = 'mental_health_tracker.urls'
@@ -63,7 +66,7 @@ ROOT_URLCONF = 'mental_health_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,10 +81,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mental_health_tracker.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -89,10 +90,8 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -108,25 +107,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = 'static/'
+
+# Define the STATIC_ROOT for collecting static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Change to a directory of your choice
+
+if DEBUG:
+    # Ensure this directory exists or create it
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',  # Ensure this directory exists for development mode
+    ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+import os
+print("BASE_DIR:", BASE_DIR)
+print("STATICFILES_DIRS:", STATICFILES_DIRS)

@@ -5,7 +5,7 @@ from selenium.webdriver.remote.webelement import WebElement
 
 class ExampleFunctionalTest(unittest.TestCase):
     def setUp(self):
-        self.browser = webdriver.Chrome()
+        self.browser = webdriver.Chrome()   
 
     def tearDown(self):
         self.browser.quit()
